@@ -45,6 +45,7 @@ func (list *SinglyLinkedList) Add(value int) {
 
 // AddLast adds a node to the last of linked list
 func (list *SinglyLinkedList) AddLast(value int) {
+	list.size++
 	node := NewNode(value, nil)
 	if list.head == nil {
 		list.head = node
