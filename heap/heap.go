@@ -14,3 +14,23 @@ func Parent(heap []int, index int) (value, i int, err error) {
 	i = (index - 1) / 2
 	return heap[i], i, nil
 }
+
+// LeftChild returns left child of given index
+func LeftChild(heap []int, index int) (value, i int, err error) {
+	if index < 0 || index >= len(heap)/2 {
+		return value, i, ErrInvalidIndex
+	}
+
+	i = index*2 + 1
+	return heap[i], i, nil
+}
+
+// RightChild returns right child of given index
+func RightChild(heap []int, index int) (value, i int, err error) {
+	if index < 0 || index >= len(heap)/2-1 {
+		return value, i, ErrInvalidIndex
+	}
+
+	i = index*2 + 2
+	return heap[i], i, nil
+}
