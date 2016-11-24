@@ -21,6 +21,14 @@ func TestMaxHeapify(t *testing.T) {
 			in{[]int{6, 2, 4, 3, 1, 0}, 1},
 			[]int{6, 3, 4, 2, 1, 0},
 		},
+		"case2": {
+			in{[]int{6, 5, 4, 3, 1, 0}, 1},
+			[]int{6, 5, 4, 3, 1, 0},
+		},
+		"case3": {
+			in{[]int{1, 6, 5, 3, 4, 2}, 0},
+			[]int{6, 4, 5, 3, 1, 2},
+		},
 	}
 
 	for k, test := range tests {

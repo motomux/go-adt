@@ -10,7 +10,7 @@ func TestParent(t *testing.T) {
 		}
 		out struct {
 			value, index int
-			err          error
+			ok           bool
 		}
 	)
 
@@ -20,27 +20,27 @@ func TestParent(t *testing.T) {
 	}{
 		"case1": {
 			in{[]int{6, 4, 5, 1, 3, 2}, 1},
-			out{6, 0, nil},
+			out{6, 0, true},
 		},
 		"case2": {
 			in{[]int{6, 4, 5, 1, 3, 2}, 2},
-			out{6, 0, nil},
+			out{6, 0, true},
 		},
 		"case3": {
 			in{[]int{6, 4, 5, 1, 3, 2}, 5},
-			out{5, 2, nil},
+			out{5, 2, true},
 		},
 		"case4": {
 			in{[]int{6, 4, 5, 1, 3, 2}, 4},
-			out{4, 1, nil},
+			out{4, 1, true},
 		},
 		"case5": {
 			in{[]int{6, 4, 5, 1, 3, 2}, 6},
-			out{0, 0, ErrInvalidIndex},
+			out{0, 0, false},
 		},
 		"case6": {
 			in{[]int{6, 4, 5, 1, 3, 2}, 0},
-			out{0, 0, ErrInvalidIndex},
+			out{0, 0, false},
 		},
 	}
 
@@ -48,7 +48,7 @@ func TestParent(t *testing.T) {
 		t.Run(k, func(t *testing.T) {
 			in, out := test.in, test.out
 
-			value, index, err := Parent(in.heap, in.index)
+			value, index, ok := Parent(in.heap, in.index)
 
 			if value != out.value {
 				t.Errorf("value doesn't match. expected=%d, actual=%d\n", value, out.value)
@@ -56,8 +56,8 @@ func TestParent(t *testing.T) {
 			if index != out.index {
 				t.Errorf("index doesn't match. expected=%d, actual=%d\n", index, out.index)
 			}
-			if err != out.err {
-				t.Errorf("err doesn't match. expected=%v, actual=%v\n", err, out.err)
+			if ok != out.ok {
+				t.Errorf("ok doesn't match. expected=%v, actual=%v\n", ok, out.ok)
 			}
 		})
 	}
@@ -71,7 +71,7 @@ func TestLeftChild(t *testing.T) {
 		}
 		out struct {
 			value, index int
-			err          error
+			ok           bool
 		}
 	)
 
@@ -81,23 +81,23 @@ func TestLeftChild(t *testing.T) {
 	}{
 		"case1": {
 			in{[]int{6, 4, 5, 1, 3, 2}, 1},
-			out{1, 3, nil},
+			out{1, 3, true},
 		},
 		"case2": {
 			in{[]int{6, 4, 5, 1, 3, 2}, 2},
-			out{2, 5, nil},
+			out{2, 5, true},
 		},
 		"case3": {
 			in{[]int{6, 4, 5, 1, 3, 2}, 5},
-			out{0, 0, ErrInvalidIndex},
+			out{0, 0, false},
 		},
 		"case4": {
 			in{[]int{6, 4, 5, 1, 3, 2}, 6},
-			out{0, 0, ErrInvalidIndex},
+			out{0, 0, false},
 		},
 		"case5": {
 			in{[]int{6, 4, 5, 1, 3, 2}, 3},
-			out{0, 0, ErrInvalidIndex},
+			out{0, 0, false},
 		},
 	}
 
@@ -105,7 +105,7 @@ func TestLeftChild(t *testing.T) {
 		t.Run(k, func(t *testing.T) {
 			in, out := test.in, test.out
 
-			value, index, err := LeftChild(in.heap, in.index)
+			value, index, ok := LeftChild(in.heap, in.index)
 
 			if value != out.value {
 				t.Errorf("value doesn't match. expected=%d, actual=%d\n", value, out.value)
@@ -113,8 +113,8 @@ func TestLeftChild(t *testing.T) {
 			if index != out.index {
 				t.Errorf("index doesn't match. expected=%d, actual=%d\n", index, out.index)
 			}
-			if err != out.err {
-				t.Errorf("err doesn't match. expected=%v, actual=%v\n", err, out.err)
+			if ok != out.ok {
+				t.Errorf("ok doesn't match. expected=%v, actual=%v\n", ok, out.ok)
 			}
 		})
 	}
@@ -128,7 +128,7 @@ func TestRightChild(t *testing.T) {
 		}
 		out struct {
 			value, index int
-			err          error
+			ok           bool
 		}
 	)
 
@@ -138,23 +138,23 @@ func TestRightChild(t *testing.T) {
 	}{
 		"case1": {
 			in{[]int{6, 4, 5, 1, 3, 2}, 1},
-			out{3, 4, nil},
+			out{3, 4, true},
 		},
 		"case2": {
 			in{[]int{6, 4, 5, 1, 3, 2}, 2},
-			out{0, 0, ErrInvalidIndex},
+			out{0, 0, false},
 		},
 		"case3": {
 			in{[]int{6, 4, 5, 1, 3, 2}, 5},
-			out{0, 0, ErrInvalidIndex},
+			out{0, 0, false},
 		},
 		"case4": {
 			in{[]int{6, 4, 5, 1, 3, 2}, 6},
-			out{0, 0, ErrInvalidIndex},
+			out{0, 0, false},
 		},
 		"case5": {
 			in{[]int{6, 4, 5, 1, 3, 2}, 3},
-			out{0, 0, ErrInvalidIndex},
+			out{0, 0, false},
 		},
 	}
 
@@ -162,7 +162,7 @@ func TestRightChild(t *testing.T) {
 		t.Run(k, func(t *testing.T) {
 			in, out := test.in, test.out
 
-			value, index, err := RightChild(in.heap, in.index)
+			value, index, ok := RightChild(in.heap, in.index)
 
 			if value != out.value {
 				t.Errorf("value doesn't match. expected=%d, actual=%d\n", value, out.value)
@@ -170,8 +170,8 @@ func TestRightChild(t *testing.T) {
 			if index != out.index {
 				t.Errorf("index doesn't match. expected=%d, actual=%d\n", index, out.index)
 			}
-			if err != out.err {
-				t.Errorf("err doesn't match. expected=%v, actual=%v\n", err, out.err)
+			if ok != out.ok {
+				t.Errorf("ok doesn't match. expected=%v, actual=%v\n", ok, out.ok)
 			}
 		})
 	}

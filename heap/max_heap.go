@@ -3,12 +3,12 @@ package heap
 // MaxHeapify heapifys max heap
 func MaxHeapify(heap []int, index int) {
 	val := heap[index]
-	lv, li, lerr := LeftChild(heap, index)
-	rv, ri, rerr := RightChild(heap, index)
+	lv, li, lok := LeftChild(heap, index)
+	rv, ri, rok := RightChild(heap, index)
 
-	if lerr == ErrInvalidIndex {
+	if !lok {
 		return
-	} else if rerr == ErrInvalidIndex {
+	} else if !rok {
 		if val < lv {
 			heap[index], heap[li] = heap[li], heap[index]
 			MaxHeapify(heap, li)
